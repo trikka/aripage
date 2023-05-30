@@ -32,6 +32,25 @@
       <!-- ブログ記事見出しエリア -->
       <!-- flex autoにすることでフレックスコンテナーの空き領域を埋めるために伸長するためにつけた-->
       <div class="flex-row border-b border-primary flex-auto px-8">
+        <!-- ↓反復処理を行っている。,idxは反復する数字のデータをとってきている。:keyはVue.において各要素を一意に識別するための特別な属性。一般的には、インデックス（idx）を使用することがあるが、それだけではない。
+          識別子（Identifier） -->
+        <ArticleHeading
+          v-for="(blog, idx) of blogs"
+          :key="idx"
+          :imgSrc="blog.eyecatch.url"
+          :caption="blog.title"
+        >
+        </ArticleHeading>
+        <ArticleHeading
+          :imgSrc="blogs[0]?.eyecatch.url"
+          :caption="blogs[0]?.title"
+        >
+        </ArticleHeading>
+        <ArticleHeading
+          :imgSrc="blogs[1]?.eyecatch.url"
+          :caption="blogs[1]?.title"
+        >
+        </ArticleHeading>
         <ArticleHeading
           imgSrc="/image/9D2380A0-70EE-443F-8B0D-17568EE22667_1_105_c.jpeg"
           caption="反省紫コインピクミン"
@@ -97,9 +116,32 @@ import ArticleHeading from "../components/ArticleHeading.vue";
 import CategoryList from "../components/CategoryList.vue";
 import TagList from "../components/TagList.vue";
 
+import { createClient } from "microcms-js-sdk";
+
+// TODO envファイルから読めないから直書き　え〜やだ〜キモーーイ
+const client = createClient({
+  serviceDomain: "aripage",
+  apiKey: "x0q8XMOGq8E4k1M04oj1oYci7k5eRg9FOpDa",
+});
+
 export default {
   name: "HogeHoge",
   components: { ArticleHeading, CategoryList, TagList },
+  data() {
+    return {
+      blogs: [],
+    };
+  },
+  created() {
+    // ブログ記事を全件取得
+    client.get({ endpoint: "blogs" }).then(({ contents }) => {
+      console.group("microcmsから取得したデータ");
+      console.log(contents);
+      console.groupEnd();
+
+      this.blogs = contents;
+    });
+  },
 };
 </script>
 
