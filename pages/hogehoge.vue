@@ -39,37 +39,9 @@
           :key="idx"
           :imgSrc="blog.eyecatch.url"
           :caption="blog.title"
+          :postedDate="blog.formatedDate"
         >
         </ArticleHeading>
-        <ArticleHeading
-          :imgSrc="blogs[0]?.eyecatch.url"
-          :caption="blogs[0]?.title"
-        >
-        </ArticleHeading>
-        <ArticleHeading
-          :imgSrc="blogs[1]?.eyecatch.url"
-          :caption="blogs[1]?.title"
-        >
-        </ArticleHeading>
-        <ArticleHeading
-          imgSrc="/image/9D2380A0-70EE-443F-8B0D-17568EE22667_1_105_c.jpeg"
-          caption="反省紫コインピクミン"
-        >
-        </ArticleHeading>
-        <ArticleHeading
-          imgSrc="/image/IMG_7305.PNG"
-          caption="反省赤コインピクミン"
-          categories="ピクミン"
-        >
-        </ArticleHeading>
-        <ArticleHeading
-          imgSrc="/image/IMG_5DC3ACEEF601-1.jpeg"
-          caption="きのこ"
-        >
-        </ArticleHeading>
-        <ArticleHeading imgSrc="/image/IMG_6496.jpeg" caption="ラミレじぃ">
-        </ArticleHeading>
-        <ArticleHeading imgSrc="" caption="５番目"> </ArticleHeading>
       </div>
       <!-- サブメニューエリア -->
       <div class="w-80">
@@ -116,6 +88,7 @@ import ArticleHeading from "../components/ArticleHeading.vue";
 import CategoryList from "../components/CategoryList.vue";
 import TagList from "../components/TagList.vue";
 
+import { parseISO, format } from "date-fns";
 import { createClient } from "microcms-js-sdk";
 
 // TODO envファイルから読めないから直書き　え〜やだ〜キモーーイ
@@ -139,7 +112,12 @@ export default {
       console.log(contents);
       console.groupEnd();
 
-      this.blogs = contents;
+      // // ↓ここで日付の情報をライブラリを使用して取得している。
+      // revisedAtプロパティを日付として解析し、指定された形式でフォーマットする。 "yyyy.MM.dd"を変えれば日付の書式を変えれる。
+      this.blogs = contents.map((e) => {
+        e.formatedDate = format(parseISO(e.revisedAt), "yyyy.MM.dd");
+        return e;
+      });
     });
   },
 };

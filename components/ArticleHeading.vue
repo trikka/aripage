@@ -13,7 +13,7 @@
         <button class="bg-primary text-bg py-2 px-6 rounded-xl font-bold">
           {{ categories }}
         </button>
-        <p class="ml-4">2023.5.23</p>
+        <p class="ml-4">{{ postedDate }}</p>
       </div>
 
       <button class="border border-black rounded p-1 mt-4">続きを読む</button>
@@ -28,6 +28,7 @@ export default {
     imgSrc: "",
     caption: "",
     categories: "",
+    postedDate: "",
   },
 };
 </script>
