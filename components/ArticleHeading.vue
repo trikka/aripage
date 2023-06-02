@@ -10,9 +10,21 @@
       </h1>
       <!-- ↓隙間を開けたかったらdivで包んんで指定する -->
       <div class="flex items-center mt-4">
-        <button class="bg-primary text-bg py-2 px-6 rounded-xl font-bold">
-          {{ categories }}
+        <!-- v-ifはcategoriesが選択されているとには表示して、ないときは表示しない-->
+        <button
+          class="bg-primary text-bg py-2 px-6 rounded-xl font-bold"
+          v-if="category"
+        >
+          {{ category.name }}
         </button>
+
+        <!-- <button
+          class="bg-primary text-bg py-2 px-6 rounded-xl font-bold mr-4"
+          v-for="category of categories"
+          :key="category"
+        >
+          {{ category.name }}
+        </button> -->
         <p class="ml-4">{{ postedDate }}</p>
       </div>
 
@@ -27,7 +39,8 @@ export default {
   props: {
     imgSrc: "",
     caption: "",
-    categories: "",
+    // categories: "",
+    category: "",
     postedDate: "",
   },
 };

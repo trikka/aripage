@@ -40,6 +40,7 @@
           :imgSrc="blog.eyecatch.url"
           :caption="blog.title"
           :postedDate="blog.formatedDate"
+          :category="blog.category"
         >
         </ArticleHeading>
       </div>
@@ -58,25 +59,13 @@
           <p class="text-center midashi-text">CATEGORY</p>
           <CategoryList
             class="mx-4 mb-2"
-            :categories="['i', 'love', 'you?']"
+            :categories="categories"
           ></CategoryList>
+          <!-- :categories="['i', 'love', 'you?']" -->
         </div>
         <!-- TAGエリア -->
         <p class="text-center midashi-text mt-2">TAG</p>
-        <TagList
-          class="pl-4"
-          :tags="[
-            'ピクミン',
-            '燃えるきのこ',
-            '水晶のキノコ',
-            '水キノコ',
-            '',
-            '',
-            '',
-            '',
-            '',
-          ]"
-        ></TagList>
+        <TagList class="pl-4" :tags="tags"></TagList>
       </div>
     </div>
   </div>
@@ -103,6 +92,8 @@ export default {
   data() {
     return {
       blogs: [],
+      categories: [],
+      tags: [],
     };
   },
   created() {
@@ -118,6 +109,22 @@ export default {
         e.formatedDate = format(parseISO(e.revisedAt), "yyyy.MM.dd");
         return e;
       });
+    });
+    // カテゴリの記事を取得　{ contents }で分割代入を使用することで、一度に複数の要素を変数に代入することができる。
+    client.get({ endpoint: "categories" }).then(({ contents }) => {
+      console.group("microcmsから取得したデータ『カテゴリ』");
+      console.log(contents);
+      console.groupEnd();
+
+      this.categories = contents;
+    });
+    // タグの記事を取得
+    client.get({ endpoint: "tags" }).then(({ contents }) => {
+      console.group("microcmsから取得したデータ『タグ』");
+      console.log(contents);
+      console.groupEnd();
+
+      this.tags = contents;
     });
   },
 };

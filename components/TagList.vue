@@ -3,10 +3,10 @@
   <div class="flex flex-wrap">
     <!-- aタグとは指定した部分の要素をリンクとして扱うことができクリックするとリンクに飛べる-->
     <a
-      v-for="tag in tags"
+      v-for="tag of tags"
       href=""
       class="border rounded border-gray-800 px-2 py-1 mr-2 mb-2"
-      ><v-icon>mdi-tag</v-icon>{{ tag }}</a
+      ><v-icon>mdi-tag</v-icon>{{ tag.tag }}</a
     >
   </div>
 </template>
