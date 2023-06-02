@@ -6,7 +6,7 @@
       v-for="tag of tags"
       href=""
       class="border rounded border-gray-800 px-2 py-1 mr-2 mb-2"
-      ><v-icon>mdi-tag</v-icon>{{ tag.tag }}</a
+      ><v-icon>mdi-tag</v-icon>{{ tag.name }}</a
     >
   </div>
 </template>

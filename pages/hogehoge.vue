@@ -47,13 +47,8 @@
       <!-- サブメニューエリア -->
       <div class="w-80">
         <!-- pick up表示エリア -->
-        <p>pick up</p>
-        <div class="h-20 bg-slate-300">imo</div>
-        <div class="mt-4 h-20 bg-pink-300">potato</div>
-        <div class="mt-4 h-20 bg-pink-300">beni</div>
-        <div class="mt-4 h-20 bg-pink-300">haruka</div>
-        <div class="mt-4 h-20 bg-pink-300">jya-mann</div>
-        <div class="mt-4 h-20 bg-pink-300">potato</div>
+        <p class="text-center midashi-text">PICK UP</p>
+        <Pickup></Pickup>
         <!-- カテゴリー表示エリア -->
         <div class="mt-4 border-2 border-accent-200">
           <p class="text-center midashi-text">CATEGORY</p>
@@ -79,6 +74,7 @@ import TagList from "../components/TagList.vue";
 
 import { parseISO, format } from "date-fns";
 import { createClient } from "microcms-js-sdk";
+import Pickup from "../components/Pickup.vue";
 
 // TODO envファイルから読めないから直書き　え〜やだ〜キモーーイ
 const client = createClient({
@@ -88,7 +84,7 @@ const client = createClient({
 
 export default {
   name: "HogeHoge",
-  components: { ArticleHeading, CategoryList, TagList },
+  components: { ArticleHeading, CategoryList, TagList, Pickup },
   data() {
     return {
       blogs: [],
