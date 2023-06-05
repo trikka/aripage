@@ -19,19 +19,21 @@
         <p>ただの主婦。</p>
       </div>
     </div> -->
-    <button
+
+    <!-- <button
       class="ml-auto mr-0 block bg-accent-200 text-white py-2 px-6 rounded-full"
     >
       ABOUT
     </button>
     <div>
       <p class="midashi-text">BLOG</p>
-    </div>
+    </div> -->
     <!-- ↓各アイテムを均等に配置し最初のアイテムは先頭に寄せ、最後のアイテムは末尾に寄せる  -->
-    <div class="flex justify-between">
+    <div class="flex justify-between mt-4">
       <!-- ブログ記事見出しエリア -->
       <!-- flex autoにすることでフレックスコンテナーの空き領域を埋めるために伸長するためにつけた-->
-      <div class="flex-row border-b border-primary flex-auto px-8">
+      <div class="flex-row flex-auto px-8 mb-8">
+        <p class="midashi-text">BLOG</p>
         <!-- ↓反復処理を行っている。,idxは反復する数字のデータをとってきている。:keyはVue.において各要素を一意に識別するための特別な属性。一般的には、インデックス（idx）を使用することがあるが、それだけではない。
           識別子（Identifier） -->
         <ArticleHeading
@@ -45,12 +47,12 @@
         </ArticleHeading>
       </div>
       <!-- サブメニューエリア -->
-      <div class="w-80">
+      <div class="w-80 mx-8">
         <!-- pick up表示エリア -->
         <p class="text-center midashi-text">PICK UP</p>
-        <Pickup></Pickup>
+        <Pickup :blogs="pickup"></Pickup>
         <!-- カテゴリー表示エリア -->
-        <div class="mt-4 border-2 border-accent-200">
+        <div class="mt-6 border-2 border-accent-200">
           <p class="text-center midashi-text">CATEGORY</p>
           <CategoryList
             class="mx-4 mb-2"
@@ -59,7 +61,7 @@
           <!-- :categories="['i', 'love', 'you?']" -->
         </div>
         <!-- TAGエリア -->
-        <p class="text-center midashi-text mt-2">TAG</p>
+        <p class="text-center midashi-text mt-6">TAG</p>
         <TagList class="pl-4" :tags="tags"></TagList>
       </div>
     </div>
@@ -88,6 +90,7 @@ export default {
   data() {
     return {
       blogs: [],
+      pickup: [],
       categories: [],
       tags: [],
     };
@@ -105,6 +108,7 @@ export default {
         e.formatedDate = format(parseISO(e.revisedAt), "yyyy.MM.dd");
         return e;
       });
+      this.pickup = this.blogs;
     });
     // カテゴリの記事を取得　{ contents }で分割代入を使用することで、一度に複数の要素を変数に代入することができる。
     client.get({ endpoint: "categories" }).then(({ contents }) => {
