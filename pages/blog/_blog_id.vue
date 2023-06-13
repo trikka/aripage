@@ -4,8 +4,9 @@
       <h1
         class="text-center tracking-widest font-extrabold text-primary text-7xl my-5"
       >
-        aripage
+        aripage det {{ $route.params.blog_id }}
       </h1>
+      <NuxtLink to="/">TOPへ</NuxtLink>
     </div>
     <HeaderNavigation :navs="['HOME', 'ABOUT', 'CONTACT']"></HeaderNavigation>
     <!-- <div class="flex-row sm:flex">
@@ -26,12 +27,15 @@
     <div>
       <p class="midashi-text">BLOG</p>
     </div> -->
+    <p class="midashi-text"></p>
     <!-- ↓各アイテムを均等に配置し最初のアイテムは先頭に寄せ、最後のアイテムは末尾に寄せる  -->
     <div class="flex justify-between mt-4">
       <!-- ブログ記事見出しエリア -->
       <!-- flex autoにすることでフレックスコンテナーの空き領域を埋めるために伸長するためにつけた-->
       <div class="flex-row flex-auto px-8 mb-8">
-        <p class="midashi-text">BLOG</p>
+        <p class="midashi-text">{{ blog.title }}</p>
+        <p>{{ blog.formatedDate }}</p>
+        <div class="content" v-html="blog.content"></div>
         <!-- ↓反復処理を行っている。,idxは反復する数字のデータをとってきている。:keyはVue.において各要素を一意に識別するための特別な属性。一般的には、インデックス（idx）を使用することがあるが、それだけではない。
           識別子（Identifier） -->
         <ArticleHeading
@@ -41,12 +45,14 @@
           :caption="blog.title"
           :postedDate="blog.formatedDate"
           :category="blog.category"
-          :blogId="blog.id"
         >
         </ArticleHeading>
       </div>
       <!-- サブメニューエリア -->
       <div class="w-80 mx-8">
+        <!-- 最新記事エリア -->
+        <p class="text-center midashi-text">最新記事</p>
+        <NewPosts :posts="newposts"></NewPosts>
         <!-- pick up表示エリア -->
         <p class="text-center midashi-text">PICK UP</p>
         <Pickup :blogs="pickup"></Pickup>
@@ -67,15 +73,22 @@
   </div>
 </template>
 
+<style>
+.class h1 {
+  font-size: 20px;
+}
+</style>
+
 <script>
-import HeaderNavigation from "../components/HeaderNavigation.vue";
-import ArticleHeading from "../components/ArticleHeading.vue";
-import CategoryList from "../components/CategoryList.vue";
-import TagList from "../components/TagList.vue";
+import HeaderNavigation from "../../components/HeaderNavigation.vue";
+import ArticleHeading from "../../components/ArticleHeading.vue";
+import CategoryList from "../../components/CategoryList.vue";
+import TagList from "../../components/TagList.vue";
 
 import { parseISO, format } from "date-fns";
 import { createClient } from "microcms-js-sdk";
-import Pickup from "../components/Pickup.vue";
+import Pickup from "../../components/Pickup.vue";
+import NewPosts from "../../components/NewPosts.vue";
 
 // TODO envファイルから読めないから直書き　え〜やだ〜キモーーイ
 const client = createClient({
@@ -88,27 +101,26 @@ export default {
   components: { ArticleHeading, CategoryList, TagList, Pickup },
   data() {
     return {
-      blogs: [],
+      blog: {},
       pickup: [],
       categories: [],
       tags: [],
+      newposts: [],
     };
   },
   created() {
     // ブログ記事を全件取得
-    client.get({ endpoint: "blogs" }).then(({ contents }) => {
-      console.group("microcmsから取得したデータ");
-      console.log(contents);
-      console.groupEnd();
+    client
+      .get({ endpoint: "blogs", contentId: this.$route.params.blog_id })
+      .then((content) => {
+        console.group("microcmsから取得したデータ");
+        console.log(content.content);
+        console.groupEnd();
 
-      // // ↓ここで日付の情報をライブラリを使用して取得している。
-      // revisedAtプロパティを日付として解析し、指定された形式でフォーマットする。 "yyyy.MM.dd"を変えれば日付の書式を変えれる。
-      this.blogs = contents.map((e) => {
-        e.formatedDate = format(parseISO(e.revisedAt), "yyyy.MM.dd");
-        return e;
+        // // ↓ここで日付の情報をライブラリを使用して取得している。
+        // revisedAtプロパティを日付として解析し、指定された形式でフォーマットする。 "yyyy.MM.dd"を変えれば日付の書式を変えれる。
+        this.blog = content;
       });
-      this.pickup = this.blogs.filter((blog) => blog.isPickup);
-    });
     // カテゴリの記事を取得　{ contents }で分割代入を使用することで、一度に複数の要素を変数に代入することができる。
     client.get({ endpoint: "categories" }).then(({ contents }) => {
       console.group("microcmsから取得したデータ『カテゴリ』");
@@ -124,6 +136,14 @@ export default {
       console.groupEnd();
 
       this.tags = contents;
+    });
+    // ブログの最新記事を取得
+    // "blogs" エンドポイントからデータを取得し、新着記事を取得する
+    client.get({ endpoint: "blogs" }).then(({ contents }) => {
+      // // 取得した新着記事の内容を this.newposts に格納する
+      this.newposts = contents;
+      //  // コンソールに新着記事を出力する
+      console.log("new post", this.newposts);
     });
   },
 };

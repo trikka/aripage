@@ -29,7 +29,8 @@
       </div>
       <!-- justify-contentは、CSSのプロパティの1つであり、Flexboxを使用して要素を水平方向（メイン軸）に配置する際の配置方法を指定する。 -->
       <div class="w-full flex justify-end mt-4 flex-auto">
-        <button class="">続きを読む</button>
+        <!-- ↓記事をリンクするためのタグ。 -->
+        <NuxtLink :to="`/blog/${blogId}`">続きを読む</NuxtLink>
       </div>
     </div>
   </div>
@@ -44,6 +45,7 @@ export default {
     // categories: "",
     category: "",
     postedDate: "",
+    blogId: "",
   },
 };
 </script>

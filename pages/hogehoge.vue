@@ -106,7 +106,7 @@ export default {
         e.formatedDate = format(parseISO(e.revisedAt), "yyyy.MM.dd");
         return e;
       });
-      this.pickup = this.blogs;
+      this.pickup = this.blogs.filter((blog) => blog.isPickup);
     });
     // カテゴリの記事を取得　{ contents }で分割代入を使用することで、一度に複数の要素を変数に代入することができる。
     client.get({ endpoint: "categories" }).then(({ contents }) => {
@@ -124,6 +124,9 @@ export default {
 
       this.tags = contents;
     });
+  },
+  methods: {
+    moveBlogDetail(blog_id) {},
   },
 };
 </script>
