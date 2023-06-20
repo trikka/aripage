@@ -47,6 +47,12 @@
           :category="blog.category"
         >
         </ArticleHeading>
+        <!-- カテゴリ別の他の記事を将来作る -->
+        <div class="flex justify-between">
+          <p v-img="" title="">前の記事</p>
+
+          <p>次の記事</p>
+        </div>
       </div>
       <!-- サブメニューエリア -->
       <div class="w-80 mx-8">
