@@ -6,7 +6,7 @@
       <h1
         class="font-bold text-3xl text-accent-200 hover:text-primary cursor-pointer duration-200"
       >
-        {{ caption }}
+        <NuxtLink :to="`/blog/${blogId}`">{{ caption }}</NuxtLink>
       </h1>
       <!-- ↓隙間を開けたかったらdivで包んんで指定する -->
       <div class="flex items-center mt-4 h-8">

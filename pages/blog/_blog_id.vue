@@ -48,10 +48,29 @@
         >
         </ArticleHeading>
         <!-- カテゴリ別の他の記事を将来作る -->
-        <div class="flex justify-between">
-          <p v-img="" title="">前の記事</p>
+        <div class="flex justify-around mx-40">
+          <!-- 前後記事へボタン -->
+          <div v-if="prevBlog">
+            <NuxtLink
+              :to="`/blog/${prevBlog.id}`"
+              class="flex py-1 px-5 border-2 rounded border-bg-300 hover:bg-bg-200 cursor-pointer duration-200"
+              ><v-icon>mdi-less-than</v-icon>
+              <p>前の記事</p></NuxtLink
+            >
+            <img :src="prevBlog.eyecatch.url" class="h-30 w-40" />
+            <p>{{ prevBlog.title }}</p>
+          </div>
 
-          <p>次の記事</p>
+          <div v-if="nextBlog">
+            <NuxtLink
+              :to="`/blog/${nextBlog.id}`"
+              class="flex py-1 px-5 border-2 rounded border-bg-300"
+              ><p>次の記事</p>
+              <v-icon>mdi-greater-than</v-icon>
+            </NuxtLink>
+            <img :src="nextBlog.eyecatch.url" class="h-30 w-40" />
+            <p>{{ nextBlog.title }}</p>
+          </div>
         </div>
       </div>
       <!-- サブメニューエリア -->
@@ -95,6 +114,7 @@ import { parseISO, format } from "date-fns";
 import { createClient } from "microcms-js-sdk";
 import Pickup from "../../components/Pickup.vue";
 import NewPosts from "../../components/NewPosts.vue";
+import { id, ta } from "date-fns/locale";
 
 // TODO envファイルから読めないから直書き　え〜やだ〜キモーーイ
 const client = createClient({
@@ -108,6 +128,8 @@ export default {
   data() {
     return {
       blog: {},
+      prevBlog: null, //前の記事で表示する
+      nextBlog: null, //次の記事で表示する
       pickup: [],
       categories: [],
       tags: [],
@@ -115,7 +137,31 @@ export default {
     };
   },
   created() {
-    // ブログ記事を全件取得
+    // ブログの記事を全部取得
+    client.get({ endpoint: "blogs" }).then(({ contents }) => {
+      // ブログのIDに一致する記事が、全ブログ記事中何番目かを表す番号を取得
+      const targetIdx = contents.findIndex(
+        ({ id }) => id === this.$route.params.blog_id
+      );
+      if (targetIdx > -1) {
+        // ブログのIDに一致する記事を表示する
+        this.blog = contents[targetIdx];
+
+        if (targetIdx > 0) {
+          // 「前の記事」用にブログIDより一つ前の記事を保持する
+          this.prevBlog = contents[targetIdx - 1];
+          console.log("前の記事", this.prevBlog);
+          console.log(this.prevBlog.eyecatch);
+        }
+
+        if (targetIdx < contents.length - 1) {
+          // 「次の記事」用にブログIDより一つ後の記事を保持する
+          this.nextBlog = contents[targetIdx + 1];
+        }
+      }
+    });
+
+    // ブログ記事をidから１件取得
     client
       .get({ endpoint: "blogs", contentId: this.$route.params.blog_id })
       .then((content) => {
@@ -125,7 +171,7 @@ export default {
 
         // // ↓ここで日付の情報をライブラリを使用して取得している。
         // revisedAtプロパティを日付として解析し、指定された形式でフォーマットする。 "yyyy.MM.dd"を変えれば日付の書式を変えれる。
-        this.blog = content;
+        // this.blog = content;
       });
     // カテゴリの記事を取得　{ contents }で分割代入を使用することで、一度に複数の要素を変数に代入することができる。
     client.get({ endpoint: "categories" }).then(({ contents }) => {
