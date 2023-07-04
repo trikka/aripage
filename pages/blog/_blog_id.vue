@@ -48,28 +48,34 @@
         >
         </ArticleHeading>
         <!-- カテゴリ別の他の記事を将来作る -->
-        <div class="flex justify-around mx-40">
+        <div class="border-t border-b flex justify-around">
           <!-- 前後記事へボタン -->
-          <div v-if="prevBlog">
-            <NuxtLink
-              :to="`/blog/${prevBlog.id}`"
-              class="flex py-1 px-5 border-2 rounded border-bg-300 hover:bg-bg-200 cursor-pointer duration-200"
-              ><v-icon>mdi-less-than</v-icon>
-              <p>前の記事</p></NuxtLink
-            >
-            <img :src="prevBlog.eyecatch.url" class="h-30 w-40" />
-            <p>{{ prevBlog.title }}</p>
+          <div v-if="prevBlog" class="w-full border-r">
+            <div class="h-5">
+              <NuxtLink
+                :to="`/blog/${prevBlog.id}`"
+                class="flex py-1 px-5 border-2 rounded w-fit border-bg-300 hover:bg-bg-200 cursor-pointer duration-200 float-right"
+                ><v-icon>mdi-less-than</v-icon>
+                <p>前の記事</p></NuxtLink
+              >
+            </div>
+            <div class="flex">
+              <img :src="prevBlog.eyecatch.url" class="h-20 w-32" />
+              <p class="m-6">{{ prevBlog.title }}</p>
+            </div>
           </div>
 
-          <div v-if="nextBlog">
+          <div v-if="nextBlog" class="w-full">
             <NuxtLink
               :to="`/blog/${nextBlog.id}`"
-              class="flex py-1 px-5 border-2 rounded border-bg-300"
+              class="flex py-1 px-5 border-2 rounded w-fit border-bg-300"
               ><p>次の記事</p>
               <v-icon>mdi-greater-than</v-icon>
             </NuxtLink>
-            <img :src="nextBlog.eyecatch.url" class="h-30 w-40" />
-            <p>{{ nextBlog.title }}</p>
+            <div class="flex float-right">
+              <p>{{ nextBlog.title }}</p>
+              <img :src="nextBlog.eyecatch.url" class="h-20 w-32" />
+            </div>
           </div>
         </div>
       </div>
