@@ -65,15 +65,17 @@
             </div>
           </div>
 
-          <div v-if="nextBlog" class="w-full">
-            <NuxtLink
-              :to="`/blog/${nextBlog.id}`"
-              class="flex py-1 px-5 border-2 rounded w-fit border-bg-300"
+          <div
+            v-if="nextBlog"
+            class="w-full cursor-pointer duration-200 hover:text-primary-200"
+          >
+            <NuxtLink :to="`/blog/${nextBlog.id}`" class="flex py-1 px-5"
               ><p>次の記事</p>
-              <v-icon>mdi-greater-than</v-icon>
+              <!-- TODO アイコンの色をかえる -->
+              <v-icon color="rgb(222 131 95)">mdi-greater-than</v-icon>
             </NuxtLink>
             <div class="flex float-right">
-              <p>{{ nextBlog.title }}</p>
+              <p class="m-6">{{ nextBlog.title }}</p>
               <img :src="nextBlog.eyecatch.url" class="h-20 w-32" />
             </div>
           </div>
