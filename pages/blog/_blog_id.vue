@@ -8,7 +8,13 @@
       </h1>
       <NuxtLink to="/">TOPへ</NuxtLink>
     </div>
-    <HeaderNavigation :navs="['HOME', 'ABOUT', 'CONTACT']"></HeaderNavigation>
+    <HeaderNavigation
+      :navs="[
+        { label: 'HOME', path: '/', style: { color: 'red' } },
+        { label: 'ABOUT', path: '/about', style: { color: 'blue' } },
+        { label: 'CONTACT', path: '/contact', style: { color: 'yellow' } },
+      ]"
+    ></HeaderNavigation>
     <!-- <div class="flex-row sm:flex">
       <div class="bg-yellow-500 w-1/2"> -->
     <!-- 画像入れるかも -->
@@ -49,43 +55,51 @@
         </ArticleHeading>
         <!-- カテゴリ別の他の記事を将来作る -->
         <div class="border-t border-b flex justify-around">
-          <!-- 前後記事へボタン -->
-          <div v-if="prevBlog" class="w-full border-r">
+          <!-- 前記事へのボタン -->
+          <NuxtLink
+            v-if="prevBlog"
+            :to="`/blog/${prevBlog.id}`"
+            class="w-full border-r cursor-pointer duration-300 group hover:text-primary-200 page-navigation"
+          >
             <div class="h-5">
-              <NuxtLink
-                :to="`/blog/${prevBlog.id}`"
-                class="flex py-1 px-5 border-2 rounded w-fit border-bg-300 hover:bg-bg-200 cursor-pointer duration-200 float-right"
-                ><v-icon>mdi-less-than</v-icon>
-                <p>前の記事</p></NuxtLink
-              >
+              <div class="flex py-1 px-5 float-right">
+                <v-icon class="vue-navigation-icon">mdi-less-than</v-icon>
+                <p>前の記事</p>
+              </div>
             </div>
             <div class="flex">
-              <img :src="prevBlog.eyecatch.url" class="h-20 w-32" />
+              <img
+                :src="prevBlog.eyecatch.url"
+                class="h-20 w-32 group-hover:brightness-75 duration-300"
+              />
               <p class="m-6">{{ prevBlog.title }}</p>
             </div>
-          </div>
-
-          <div
+          </NuxtLink>
+          <!--  後記事へのボタン-->
+          <NuxtLink
             v-if="nextBlog"
-            class="w-full cursor-pointer duration-200 hover:text-primary-200"
+            :to="`/blog/${nextBlog.id}`"
+            class="w-full cursor-pointer duration-300 group hover:text-primary-200 page-navigation"
           >
-            <NuxtLink :to="`/blog/${nextBlog.id}`" class="flex py-1 px-5"
-              ><p>次の記事</p>
-              <!-- TODO アイコンの色をかえる -->
-              <v-icon color="rgb(222 131 95)">mdi-greater-than</v-icon>
-            </NuxtLink>
+            <div class="flex py-1 px-5">
+              <p>次の記事</p>
+              <v-icon class="vue-navigation-icon">mdi-greater-than</v-icon>
+            </div>
             <div class="flex float-right">
               <p class="m-6">{{ nextBlog.title }}</p>
-              <img :src="nextBlog.eyecatch.url" class="h-20 w-32" />
+              <img
+                :src="nextBlog.eyecatch.url"
+                class="h-20 w-32 group-hover:brightness-75 duration-300"
+              />
             </div>
-          </div>
+          </NuxtLink>
         </div>
       </div>
       <!-- サブメニューエリア -->
       <div class="w-80 mx-8">
         <!-- 最新記事エリア -->
         <p class="text-center midashi-text">最新記事</p>
-        <NewPosts :posts="newposts"></NewPosts>
+        <NewPosts :posts="newposts" class="cursor-pointer"></NewPosts>
         <!-- pick up表示エリア -->
         <p class="text-center midashi-text">PICK UP</p>
         <Pickup :blogs="pickup"></Pickup>
@@ -212,5 +226,9 @@ export default {
 <style scoped>
 .midashi-text {
   font-size: 30px;
+}
+
+.page-navigation:hover .vue-navigation-icon {
+  color: rgb(222 131 95);
 }
 </style>

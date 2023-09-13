@@ -7,7 +7,13 @@
         aripage
       </h1>
     </div>
-    <HeaderNavigation :navs="['HOME', 'ABOUT', 'CONTACT']"></HeaderNavigation>
+    <HeaderNavigation
+      :navs="[
+        { label: 'HOME', path: '/' },
+        { label: 'ABOUT', path: '/about' },
+        { label: 'CONTACT', path: '/contact' },
+      ]"
+    ></HeaderNavigation>
     <!-- <div class="flex-row sm:flex">
       <div class="bg-yellow-500 w-1/2"> -->
     <!-- 画像入れるかも -->

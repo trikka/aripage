@@ -5,7 +5,7 @@
     <a
       v-for="tag of tags"
       href=""
-      class="border rounded border-gray-800 px-2 py-1 mr-2 mb-2"
+      class="border rounded border-gray-800 px-2 py-1 mr-2 mb-2 cursor-pointer duration-300 hover:bg-primary-200 hover:text-bg-200"
       ><v-icon>mdi-tag</v-icon>{{ tag.name }}</a
     >
   </div>

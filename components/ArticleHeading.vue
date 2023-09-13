@@ -11,7 +11,7 @@
         </h1>
         <!-- ↓隙間を開けたかったらdivで包んんで指定する -->
         <div class="flex items-center mt-4 h-8">
-          <!-- v-ifはcategoriesが選択されているとには表示して、ないときは表示しない-->
+          <!-- v-ifはcategoriesが選択されているときには表示して、ないときは表示しない-->
           <button
             class="bg-primary block text-bg py-1 px-5 rounded-xl font-bold hover:bg-primary-200 hover:text-bg-200 cursor-pointer duration-200"
             v-if="category"
