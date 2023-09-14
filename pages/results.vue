@@ -18,10 +18,6 @@
       <div class="bg-yellow-500 w-1/2"> -->
     <!-- 画像入れるかも -->
     <!-- </div>
-      <div class="bg-red-500 flex-auto">
-        <p class="midashi-text">名前</p>
-        <p>ただの主婦。</p>
-      </div>
     </div> -->
 
     <!-- <button
@@ -50,6 +46,7 @@
           :blogId="blog.id"
         >
         </ArticleHeading>
+        <p v-if="!blogs.length">検索結果は0件です。^_^</p>
       </div>
       <!-- サブメニューエリア -->
       <div class="w-80 mx-8">
@@ -106,20 +103,10 @@ export default {
     };
   },
   created() {
-    // ブログ記事を全件取得
-    client.get({ endpoint: "blogs" }).then(({ contents }) => {
-      console.group("microcmsから取得したデータ");
-      console.log(contents);
-      console.groupEnd();
+    // クエリパラメータで送られたカテゴリーID、タグIDを取得する
+    const { categoryId, tagId } = this.$route.query;
+    this.blogFiltering(categoryId, tagId);
 
-      // // ↓ここで日付の情報をライブラリを使用して取得している。
-      // revisedAtプロパティを日付として解析し、指定された形式でフォーマットする。 "yyyy.MM.dd"を変えれば日付の書式を変えれる。
-      this.blogs = contents.map((e) => {
-        e.formatedDate = format(parseISO(e.revisedAt), "yyyy.MM.dd");
-        return e;
-      });
-      this.pickup = this.blogs.filter((blog) => blog.isPickup);
-    });
     // カテゴリの記事を取得　{ contents }で分割代入を使用することで、一度に複数の要素を変数に代入することができる。
     client.get({ endpoint: "categories" }).then(({ contents }) => {
       console.group("microcmsから取得したデータ『カテゴリ』");
@@ -136,6 +123,43 @@ export default {
 
       this.tags = contents;
     });
+  },
+  watch: {
+    $route({ query }) {
+      this.blogFiltering(query.categoryId, query.tagId);
+    },
+  },
+  methods: {
+    blogFiltering(categoryId, tagId) {
+      // microCMSのAPIリクエスト時に使用するクエリーを格納するオブジェクト
+      // クエリとは、データベースやAPIなどから情報を取得するために使われる特定の命令や要求を指す。具体例はデータベースに対して情報の取得する操作を行うための命令文
+      const queries = {};
+      if (categoryId) {
+        queries.filters = `category[equals]${categoryId}`;
+      } else if (tagId) {
+        queries.filters = `tags[contains]${tagId}`;
+      }
+      console.log("あへぇ", queries);
+      // ブログ記事を全件取得
+      client
+        .get({
+          endpoint: "blogs",
+          queries,
+        })
+        .then(({ contents }) => {
+          console.group("microcmsから取得したデータ");
+          console.log(contents);
+          console.groupEnd();
+
+          // // ↓ここで日付の情報をライブラリを使用して取得している。
+          // revisedAtプロパティを日付として解析し、指定された形式でフォーマットする。 "yyyy.MM.dd"を変えれば日付の書式を変えれる。
+          this.blogs = contents.map((e) => {
+            e.formatedDate = format(parseISO(e.revisedAt), "yyyy.MM.dd");
+            return e;
+          });
+          this.pickup = this.blogs.filter((blog) => blog.isPickup);
+        });
+    },
   },
 };
 </script>

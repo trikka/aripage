@@ -10,9 +10,9 @@
     </div>
     <HeaderNavigation
       :navs="[
-        { label: 'HOME', path: '/', style: { color: 'red' } },
-        { label: 'ABOUT', path: '/about', style: { color: 'blue' } },
-        { label: 'CONTACT', path: '/contact', style: { color: 'yellow' } },
+        { label: 'HOME', path: '/' },
+        { label: 'ABOUT', path: '/about' },
+        { label: 'CONTACT', path: '/contact' },
       ]"
     ></HeaderNavigation>
     <!-- <div class="flex-row sm:flex">

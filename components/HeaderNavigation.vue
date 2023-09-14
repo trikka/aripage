@@ -9,8 +9,9 @@
       v-for="nav in navs"
       class="h-full w-full py-4 hover:scale-125 duration-200 cursor-pointer"
     >
-      <!--  nav.path の値をリンク先のURLとして指定。'/about'だとまだページを作っていないから表示されない -->
-      <NuxtLink :to="nav.path" :style="nav.style">{{ nav.label }}</NuxtLink>
+      <!--  nav.path の値をリンク先のURLとして指定。'/about'だとまだページを作っていないから表示されない -
+         :style="nav.style"をつけると色を指定できる->
+      <NuxtLink :to="nav.path">{{ nav.label }}</NuxtLink>
     </li>
   </ul>
 </template>
