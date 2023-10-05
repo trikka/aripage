@@ -75,8 +75,20 @@
         <TagList class="pl-4" :tags="tags"></TagList>
       </div>
     </div>
+
+  <BlogHeadingmobile
+    v-for="(blog, idx) of blogs"
+              :key="idx"
+              :imgSrc="blog.eyecatch.url"
+              :caption="blog.title"
+              :postedDate="blog.formatedDate"
+              :category="blog.category"
+            >
+    </BlogHeadingmobile>
   </div>
 </template>
+        
+
 
 <script>
 import HeaderNavigation from "../components/HeaderNavigation.vue";
@@ -87,6 +99,7 @@ import TagList from "../components/TagList.vue";
 import { parseISO, format } from "date-fns";
 import { createClient } from "microcms-js-sdk";
 import Pickup from "../components/Pickup.vue";
+import BlogHeadingmobile from "../components/BlogHeadingmobile.vue";
 
 // TODO envファイルから読めないから直書き　え〜やだ〜キモーーイ
 const client = createClient({
