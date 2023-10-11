@@ -1,6 +1,7 @@
 <template>
-  <div class="text-text bg-bg">
-    <div>
+   <div className="md:flex flex-row bg-bg-300">
+      <div class="text-text bg-bg">
+      <div className="basis-1/2"></div>
       <h1
         class="text-center tracking-widest font-extrabold text-primary text-7xl my-5"
       >
@@ -33,10 +34,10 @@
       <p class="midashi-text">BLOG</p>
     </div> -->
     <!-- ↓各アイテムを均等に配置し最初のアイテムは先頭に寄せ、最後のアイテムは末尾に寄せる  -->
-    <div class="flex justify-between mt-4">
+    <div class="md:flex justify-between mt-4">
       <!-- ブログ記事見出しエリア -->
       <!-- flex autoにすることでフレックスコンテナーの空き領域を埋めるために伸長するためにつけた-->
-      <div class="flex-row flex-auto px-8 mb-8">
+      <div class="md:flex-row flex-auto px-8 mb-8">
         <p class="midashi-text">BLOG</p>
         <!-- ↓反復処理を行っている。,idxは反復する数字のデータをとってきている。:keyはVue.において各要素を一意に識別するための特別な属性。一般的には、インデックス（idx）を使用することがあるが、それだけではない。
           識別子（Identifier） -->
@@ -76,6 +77,10 @@
       </div>
     </div>
 
+
+
+    
+ 
   <BlogHeadingmobile
     v-for="(blog, idx) of blogs"
               :key="idx"
