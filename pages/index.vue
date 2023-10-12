@@ -36,8 +36,10 @@
     <!-- ↓各アイテムを均等に配置し最初のアイテムは先頭に寄せ、最後のアイテムは末尾に寄せる  -->
     <div class="md:flex justify-between mt-4">
       <!-- ブログ記事見出しエリア -->
-      <!-- flex autoにすることでフレックスコンテナーの空き領域を埋めるために伸長するためにつけた-->
-      <div class="md:flex-row flex-auto px-8 mb-8">
+      <!-- flex autoにすることでフレックスコンテナーの空き領域を埋めるために伸長するためにつけた
+        max-sm:hiddenはsmall以下になると小さい画面サイズで要素を非表示にできるようにしている-->
+        
+        <div class="md:flex-row flex-auto px-8 mb-8 max-sm:hidden">
         <p class="midashi-text">BLOG</p>
         <!-- ↓反復処理を行っている。,idxは反復する数字のデータをとってきている。:keyはVue.において各要素を一意に識別するための特別な属性。一般的には、インデックス（idx）を使用することがあるが、それだけではない。
           識別子（Identifier） -->
@@ -78,18 +80,18 @@
     </div>
 
 
-
-    
- 
-  <BlogHeadingmobile
-    v-for="(blog, idx) of blogs"
-              :key="idx"
-              :imgSrc="blog.eyecatch.url"
-              :caption="blog.title"
-              :postedDate="blog.formatedDate"
-              :category="blog.category"
-            >
-    </BlogHeadingmobile>
+    <!-- スマホ用記事エリアのラッパークラス（スマホサイズで表示、それ以上で非表示） -->
+    <div class="sm:hidden flex-auto px-8 mb-8 x">
+      <BlogHeadingmobile
+        v-for="(blog, idx) of blogs"
+        :key="idx"
+        :imgSrc="blog.eyecatch.url"
+        :caption="blog.title"
+        :postedDate="blog.formatedDate"
+        :category="blog.category"
+      >
+      </BlogHeadingmobile>
+    </div>
   </div>
 </template>
         
