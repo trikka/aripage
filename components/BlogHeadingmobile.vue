@@ -1,7 +1,7 @@
 <template>
   <div class="flex m-10 bg-bg-200 pb-16">
     <NuxtLink :to="`/blog/${blogId}`" class="w-full hover:opacity-70">
-      <!-- ↓object-cove：r要素のサイズに合わせて配置し、アスペクト比（縦横比）は維持したままオブジェクトが要素より大きい場合、余分な部分を切り取る-->
+      <!-- ↓object-cove：要素のサイズに合わせて配置し、アスペクト比（縦横比）は維持したままオブジェクトが要素より大きい場合、余分な部分を切り取る-->
       <img :src="imgSrc" class=" h-60 w-full object-cover">
       <!-- justify-between： flexアイテムの両端揃え-->
       <div class="flex mx-4 mt-4 h-8 justify-between">
@@ -11,7 +11,7 @@
               >{{ category.name }}
         </button>
       </div>
-          <h1 class=" pt-3 text-center font-bold text-3xl text-accent-200 hover:text-primary cursor-pointer duration-200">
+          <h1 class="m-10  font-bold text-3xl text-accent-200 hover:text-primary cursor-pointer duration-200">
             <NuxtLink :to="`/blog/${blogId}`">{{ caption }}</NuxtLink>
           </h1>
             

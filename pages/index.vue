@@ -1,20 +1,16 @@
 <template>
-   <div className="md:flex flex-row bg-bg-300">
-      <div class="text-text bg-bg">
+  <div className="md:flex flex-row bg-bg-300">
+    <div class="text-text bg-bg">
       <div className="basis-1/2"></div>
-      <h1
-        class="text-center tracking-widest font-extrabold text-primary text-7xl my-5"
-      >
+      <h1 class="text-center tracking-widest font-extrabold text-primary text-7xl my-5">
         aripage
       </h1>
     </div>
-    <HeaderNavigation
-      :navs="[
-        { label: 'HOME', path: '/' },
-        // { label: 'ABOUT', path: '/about' },
-        // { label: 'CONTACT', path: '/contact' },
-      ]"
-    ></HeaderNavigation>
+    <HeaderNavigation :navs="[
+      { label: 'HOME', path: '/' },
+      // { label: 'ABOUT', path: '/about' },
+      // { label: 'CONTACT', path: '/contact' },
+    ]"></HeaderNavigation>
     <!-- <div class="flex-row sm:flex">
       <div class="bg-yellow-500 w-1/2"> -->
     <!-- 画像入れるかも -->
@@ -34,63 +30,51 @@
       <p class="midashi-text">BLOG</p>
     </div> -->
     <!-- ↓各アイテムを均等に配置し最初のアイテムは先頭に寄せ、最後のアイテムは末尾に寄せる  -->
-    <div class="md:flex justify-between mt-4">
+    <div iv class="md:flex justify-between mt-4">
       <!-- ブログ記事見出しエリア -->
       <!-- flex autoにすることでフレックスコンテナーの空き領域を埋めるために伸長するためにつけた
-        max-sm:hiddenはsmall以下になると小さい画面サイズで要素を非表示にできるようにしている-->
-        
-        <div class="md:flex-row flex-auto px-8 mb-8 max-sm:hidden">
+            max-sm:hiddenはsmall以下になると小さい画面サイズで要素を非表示にできるようにしている-->
+
+      <div class="md:flex-row flex-auto px-8 mb-8 max-sm:hidden">
         <p class="midashi-text">BLOG</p>
         <!-- ↓反復処理を行っている。,idxは反復する数字のデータをとってきている。:keyはVue.において各要素を一意に識別するための特別な属性。一般的には、インデックス（idx）を使用することがあるが、それだけではない。
-          識別子（Identifier） -->
-        <ArticleHeading
-          v-for="(blog, idx) of blogs"
-          :key="idx"
-          :imgSrc="blog.eyecatch.url"
-          :caption="blog.title"
-          :postedDate="blog.formatedDate"
-          :category="blog.category"
-          :blogId="blog.id"
-        >
+            識別子（Identifier） -->
+        <ArticleHeading v-for="(blog, idx) of blogs" :key="idx" :imgSrc="blog.eyecatch.url" :caption="blog.title"
+          :postedDate="blog.formatedDate" :category="blog.category" :blogId="blog.id">
         </ArticleHeading>
       </div>
+      <FooterNavigation></FooterNavigation>
+
+      <!-- スマホ用記事エリアのラッパークラス（スマホサイズで表示、それ以上で非表示） -->
+      <div class="sm:hidden flex-auto px-8 mb-8">
+        <BlogHeadingmobile v-for="(blog, idx) of blogs" :key="idx" :imgSrc="blog.eyecatch.url" :caption="blog.title"
+          :postedDate="blog.formatedDate" :category="blog.category">
+        </BlogHeadingmobile>
+      </div>
+      
       <!-- サブメニューエリア -->
-      <div class="w-80 mx-8">
-        <!-- 自己紹介 -->
-        <p class="text-center midashi-text mt-6">ari</p>
-        <p>
-          全くプログラム知識のない人間が気まぐれで始めたブログ。何気ない日常を綴っていきます！
-        </p>
+      <div class="w-80 mx-8 max-sm:mx-auto">
+        <!-- 自己紹介 --> <!-- スマホ表示の時は非表示にする -->
+        <div class=" max-sm:hidden">
+          <p class="text-center midashi-text mt-6">ari</p>
+          <p>
+            全くプログラム知識のない人間が気まぐれで始めたブログ。何気ない日常を綴っていきます！
+          </p>
+        </div>
         <!-- pick up表示エリア
-        <p class="text-center midashi-text">PICK UP</p>
-        <Pickup :blogs="pickup"></Pickup> -->
+            <p class="text-center midashi-text">PICK UP</p>
+            <Pickup :blogs="pickup"></Pickup> -->
+
         <!-- カテゴリー表示エリア -->
         <div class="mt-6 border-2 border-accent-200">
           <p class="text-center midashi-text">CATEGORY</p>
-          <CategoryList
-            class="mx-4 mb-2"
-            :categories="categories"
-          ></CategoryList>
+          <CategoryList class="mx-4 mb-2" :categories="categories"></CategoryList>
           <!-- :categories="['i', 'love', 'you?']" -->
         </div>
         <!-- TAGエリア -->
-        <p class="text-center midashi-text mt-6">TAG</p>
+        <p class="max-sm:text-left text-center midashi-text mt-6">TAG</p>
         <TagList class="pl-4" :tags="tags"></TagList>
       </div>
-    </div>
-
-
-    <!-- スマホ用記事エリアのラッパークラス（スマホサイズで表示、それ以上で非表示） -->
-    <div class="sm:hidden flex-auto px-8 mb-8 x">
-      <BlogHeadingmobile
-        v-for="(blog, idx) of blogs"
-        :key="idx"
-        :imgSrc="blog.eyecatch.url"
-        :caption="blog.title"
-        :postedDate="blog.formatedDate"
-        :category="blog.category"
-      >
-      </BlogHeadingmobile>
     </div>
   </div>
 </template>
@@ -107,6 +91,7 @@ import { parseISO, format } from "date-fns";
 import { createClient } from "microcms-js-sdk";
 import Pickup from "../components/Pickup.vue";
 import BlogHeadingmobile from "../components/BlogHeadingmobile.vue";
+import FooterNavigation from "../components/FooterNavigation.vue";
 
 // TODO envファイルから読めないから直書き　え〜やだ〜キモーーイ
 const client = createClient({
@@ -116,7 +101,7 @@ const client = createClient({
 
 export default {
   name: "Home",
-  components: { ArticleHeading, CategoryList, TagList, Pickup },
+  components: { ArticleHeading, CategoryList, TagList, Pickup, FooterNavigation },
   data() {
     return {
       blogs: [],
