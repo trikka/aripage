@@ -73,12 +73,21 @@
       <div class="w-80 mx-8 max-sm:mx-auto">
         <!-- 自己紹介 --> <!-- スマホ表示の時は非表示にする -->
         <!-- <div class=" max-sm:hidden"> -->
-          <p class="text-center midashi-text mt-6">ari</p>
-          <p>
-            全くプログラム知識のない人間が気まぐれで始めたブログ。何気ない日常を綴っていきます！
-          </p>
-          <div class="bg-primary rounded-3xl w-48 h-10 text-center leading-10 font-bold text-xl text-white  hover:bg-primary-200 hover:text-bg-200 cursor-pointer duration-200 m-auto">詳しくはこちら</div>
-        <!-- </div> -->
+          <div class=" max-sm:hidden">
+            <p class="text-center midashi-text mt-6">ari</p>
+            <p>
+              全くプログラム知識のない人間が気まぐれで始めたブログ。何気ない日常を綴っていきます！
+            </p>
+          </div>
+          <div class="sm:hidden">
+            <div class="midashi-text">ABOUT</div>
+            <div class=" font-bold">aripageについて</div>
+            <p>
+              全くプログラム知識のない人間が気まぐれで始めたブログ。何気ない日常を綴っていきます！
+            </p>
+            <div class="bg-primary rounded-3xl w-48 h-10 text-center leading-10 font-bold text-xl text-white  hover:bg-primary-200 hover:text-bg-200 cursor-pointer duration-200 m-auto">詳しくはこちら</div>
+        </div>
+          <!-- </div> -->
         <!-- pick up表示エリア
             <p class="text-center midashi-text">PICK UP</p>
             <Pickup :blogs="pickup"></Pickup> -->
