@@ -4,9 +4,8 @@
       <h1
         class="text-center tracking-widest font-extrabold text-primary text-7xl my-5"
       >
-        aripage det {{ $route.params.blog_id }}
+        aripage
       </h1>
-      <NuxtLink to="/">TOPへ</NuxtLink>
     </div>
     <HeaderNavigation
       :navs="[
@@ -15,45 +14,34 @@
         { label: 'CONTACT', path: '/contact' },
       ]"
     ></HeaderNavigation>
-    <!-- <div class="flex-row sm:flex">
-      <div class="bg-yellow-500 w-1/2"> -->
-    <!-- 画像入れるかも -->
-    <!-- </div>
-      <div class="bg-red-500 flex-auto">
-        <p class="midashi-text">名前</p>
-        <p>ただの主婦。</p>
-      </div>
-    </div> -->
-
-    <!-- <button
-      class="ml-auto mr-0 block bg-accent-200 text-white py-2 px-6 rounded-full"
-    >
-      ABOUT
-    </button>
-    <div>
-      <p class="midashi-text">BLOG</p>
-    </div> -->
-    <p class="midashi-text"></p>
-    <!-- ↓各アイテムを均等に配置し最初のアイテムは先頭に寄せ、最後のアイテムは末尾に寄せる  -->
-    <div class="flex justify-between mt-4">
-      <!-- ブログ記事見出しエリア -->
-      <!-- flex autoにすることでフレックスコンテナーの空き領域を埋めるために伸長するためにつけた-->
-      <div class="flex-row flex-auto px-8 mb-8">
-        <p class="midashi-text">{{ blog.title }}</p>
-        <p>{{ blog.formatedDate }}</p>
-        <div class="content" v-html="blog.content"></div>
-        <!-- ↓反復処理を行っている。,idxは反復する数字のデータをとってきている。:keyはVue.において各要素を一意に識別するための特別な属性。一般的には、インデックス（idx）を使用することがあるが、それだけではない。
-          識別子（Identifier） -->
-        <ArticleHeading
-          v-for="(blog, idx) of blogs"
-          :key="idx"
-          :imgSrc="blog.eyecatch.url"
-          :caption="blog.title"
-          :postedDate="blog.formatedDate"
-          :category="blog.category"
-        >
-        </ArticleHeading>
-        <!-- カテゴリ別の他の記事を将来作る -->
+    <div class="flex">
+      <!-- メインコンテンツ -->
+      <div class="mx-8 flex-1">
+        <div class="flex justify-between mt-4 pb-2 border-b-primary border-b-2">
+          <!-- ページタイトル -->
+          <h1 class="font-bold text-3xl text-accent-200">{{ blog.title }}</h1>
+          <div class="text-right">
+            <!-- 投稿日 -->
+            <p>{{ blog.postedDate }}</p>
+            <!-- カテゴリー -->
+            <button
+              class="bg-primary block text-bg py-1 px-5 rounded-xl font-bold hover:bg-primary-200 hover:text-bg-200 cursor-pointer duration-200"
+              v-if="blog.category"
+            >
+              {{ blog.category.name }}
+            </button>
+          </div>
+        </div>
+        <div class="border-b-primary border-b-2">
+          <!-- アイキャッチ -->
+          <img class="max-h-[50vh] py-2 mx-auto" :src="blog.eyecatch?.url" />
+        </div>
+        <div class="border-b-primary border-b-2">
+          <!-- 本文 -->
+          <div class="mt-2 mb-4" v-html="blog.content"></div>
+          <div class="w-56 santen" v-html="blog.content"></div>
+        </div>
+        <!-- フッター（） -->
         <div class="border-t border-b flex justify-around">
           <!-- 前記事へのボタン -->
           <NuxtLink
@@ -95,7 +83,7 @@
           </NuxtLink>
         </div>
       </div>
-      <!-- サブメニューエリア -->
+      <!-- サイドメニュー -->
       <div class="w-80 mx-8">
         <!-- 最新記事エリア -->
         <p class="text-center midashi-text">最新記事</p>
@@ -168,6 +156,11 @@ export default {
       if (targetIdx > -1) {
         // ブログのIDに一致する記事を表示する
         this.blog = contents[targetIdx];
+        this.blog.postedDate = format(
+          parseISO(this.blog.revisedAt),
+          "yyyy.MM.dd"
+        );
+        console.log(this.blog);
 
         if (targetIdx > 0) {
           // 「前の記事」用にブログIDより一つ前の記事を保持する
@@ -223,7 +216,16 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+.santen p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.santen p:not(:first-child) {
+  display: none;
+}
+
 .midashi-text {
   font-size: 30px;
 }
