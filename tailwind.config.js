@@ -1,3 +1,8 @@
+const {
+  iconsPlugin,
+  getIconCollections,
+} = require("@egoist/tailwindcss-icons");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{html,js,vue}"],
@@ -26,5 +31,10 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    iconsPlugin({
+      // https://icones.js.org/
+      collections: getIconCollections(["mdi"]),
+    }),
+  ],
 };
