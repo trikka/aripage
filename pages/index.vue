@@ -30,12 +30,12 @@
       <p class="midashi-text">BLOG</p>
     </div> -->
     <!-- ↓各アイテムを均等に配置し最初のアイテムは先頭に寄せ、最後のアイテムは末尾に寄せる  -->
-    <div iv class="md:flex justify-between mt-4">
+    <div iv class="lg:flex justify-between mt-4">
       <!-- ブログ記事見出しエリア -->
       <!-- flex autoにすることでフレックスコンテナーの空き領域を埋めるために伸長するためにつけた
             max-sm:hiddenはsmall以下になると小さい画面サイズで要素を非表示にできるようにしている-->
 
-      <div class="md:flex-row flex-auto px-8 mb-8 max-sm:hidden">
+      <div class="lg:flex-row flex-auto px-8 mb-8 max-lg:hidden">
         <p class="midashi-text">BLOG</p>
         <!-- ↓反復処理を行っている。,idxは反復する数字のデータをとってきている。:keyはVue.において各要素を一意に識別するための特別な属性。一般的には、インデックス（idx）を使用することがあるが、それだけではない。
             識別子（Identifier） -->
@@ -58,7 +58,7 @@
                                 {label:'5', path: '/'}]"></FooterNavigation> -->
 
       <!-- スマホ用記事エリアのラッパークラス（スマホサイズで表示、それ以上で非表示） -->
-      <div class="sm:hidden flex-auto px-8 mb-8">
+      <div class="lg:hidden flex-auto px-8 mb-8">
         <BlogHeadingmobile 
           v-for="(blog, idx) of blogs" 
           :key="idx" 
