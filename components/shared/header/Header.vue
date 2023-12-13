@@ -19,5 +19,6 @@
 import HeaderNavigation from "../../HeaderNavigation.vue";
 export default {
   name: "Header",
+  props: {},
 };
 </script>
