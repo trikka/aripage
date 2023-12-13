@@ -12,26 +12,19 @@
         <!-- ↓隙間を開けたかったらdivで包んんで指定する -->
         <div class="flex items-center mt-4 h-8">
           <!-- v-ifはcategoriesが選択されているときには表示して、ないときは表示しない-->
-          <button
+          <NuxtLink :to="`/results?categoryId=${category.id}`"
             class="bg-primary block text-bg py-1 px-5 rounded-xl font-bold hover:bg-primary-200 hover:text-bg-200 cursor-pointer duration-200"
             v-if="category"
           >
             {{ category.name }}
-          </button>
-
-          <!-- <button
-          class="bg-primary text-bg py-2 px-6 rounded-xl font-bold mr-4"
-          v-for="category of categories"
-          :key="category"
-        >
-          {{ category.name }}
-        </button> -->
+          </NuxtLink>
           <p class="ml-4">{{ postedDate }}</p>
         </div>
+        <Ellipses class="w-80 m-2" :html-contents="content"></Ellipses>
         <!-- justify-contentは、CSSのプロパティの1つであり、Flexboxを使用して要素を水平方向（メイン軸）に配置する際の配置方法を指定する。 -->
         <div class="w-full flex justify-end mt-4 flex-auto">
           <!-- ↓記事をリンクするためのタグ。 -->
-          <NuxtLink :to="`/blog/${blogId}`">続きを読む</NuxtLink>
+          <NuxtLink :to="`/blog/${blogId}`" class="hover:text-primary-200">続きを読む</NuxtLink>
         </div>
       </div>
     </div>
@@ -39,15 +32,17 @@
 </template>
 
 <script>
+import Ellipses from './Ellipses.vue'
 export default {
   name: "ArticleHeading",
+  components: {Ellipses},
   props: {
     imgSrc: "",
     caption: "",
-    // categories: "",
     category: "",
     postedDate: "",
     blogId: "",
+    content: ''
   },
 };
 </script>

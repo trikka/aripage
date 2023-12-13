@@ -46,15 +46,16 @@
           :caption="blog.title"
           :postedDate="blog.formatedDate" 
           :category="blog.category" 
-          :blogId="blog.id">
+          :blogId="blog.id"
+          :content="blog.content">
         </ArticleHeading>
       </div>
       
-      <FooterNavigation :navs="[{label:'1', path: '/'},
+      <!-- <FooterNavigation :navs="[{label:'1', path: '/'},
                                 {label:'2', path: '/'},
                                 {label:'3', path: '/'},
                                 {label:'4', path: '/'},
-                                {label:'5', path: '/'}]"></FooterNavigation>
+                                {label:'5', path: '/'}]"></FooterNavigation> -->
 
       <!-- スマホ用記事エリアのラッパークラス（スマホサイズで表示、それ以上で非表示） -->
       <div class="sm:hidden flex-auto px-8 mb-8">
@@ -67,7 +68,7 @@
           :category="blog.category">
         </BlogHeadingmobile>
       </div>
-      <div class="bg-primary rounded-3xl w-48 h-10 text-center leading-10 font-bold text-xl text-white  hover:bg-primary-200 hover:text-bg-200 cursor-pointer duration-200 m-auto">投稿一覧へ</div>
+      <div class="sm:hidden bg-primary rounded-3xl w-48 h-10 text-center leading-10 font-bold text-xl text-white  hover:bg-primary-200 hover:text-bg-200 cursor-pointer duration-200 m-auto mb-2">投稿一覧へ</div>
       
       <!-- サブメニューエリア -->
       <div class="w-80 mx-8 max-sm:mx-auto">
@@ -85,7 +86,7 @@
             <p>
               全くプログラム知識のない人間が気まぐれで始めたブログ。何気ない日常を綴っていきます！
             </p>
-            <div class="bg-primary rounded-3xl w-48 h-10 text-center leading-10 font-bold text-xl text-white  hover:bg-primary-200 hover:text-bg-200 cursor-pointer duration-200 m-auto">詳しくはこちら</div>
+            <div class=" mt-3 bg-primary rounded-3xl w-48 h-10 text-center leading-10 font-bold text-xl text-white  hover:bg-primary-200 hover:text-bg-200 cursor-pointer duration-200 m-auto">詳しくはこちら</div>
         </div>
           <!-- </div> -->
         <!-- pick up表示エリア
@@ -98,9 +99,9 @@
           <CategoryList class="mx-4 mb-2" :categories="categories"></CategoryList>
           <!-- :categories="['i', 'love', 'you?']" -->
         </div>
-        <!-- TAGエリア -->
+        <!-- TAGエリア
         <p class="max-sm:text-left text-center midashi-text mt-6">TAG</p>
-        <TagList class="pl-4" :tags="tags"></TagList>
+        <TagList class="pl-4" :tags="tags"></TagList> -->
       </div>
     </div>
   </div>
