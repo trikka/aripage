@@ -1,36 +1,9 @@
 <template>
   <div className="md:flex flex-row bg-bg-300">
-    <div class="text-text bg-bg">
-      <div className="basis-1/2"></div>
-      <h1 class="text-center tracking-widest font-extrabold text-primary text-7xl my-5">
-        aripage
-      </h1>
-    </div>
-    <HeaderNavigation :navs="[
-      { label: 'HOME', path: '/' },
-      // { label: 'ABOUT', path: '/about' },
-      // { label: 'CONTACT', path: '/contact' },
-    ]"></HeaderNavigation>
-    <!-- <div class="flex-row sm:flex">
-      <div class="bg-yellow-500 w-1/2"> -->
-    <!-- 画像入れるかも -->
-    <!-- </div>
-      <div class="bg-red-500 flex-auto">
-        <p class="midashi-text">名前</p>
-        <p>ただの主婦。</p>
-      </div>
-    </div> -->
+    <Header />
 
-    <!-- <button
-      class="ml-auto mr-0 block bg-accent-200 text-white py-2 px-6 rounded-full"
-    >
-      ABOUT
-    </button>
-    <div>
-      <p class="midashi-text">BLOG</p>
-    </div> -->
     <!-- ↓各アイテムを均等に配置し最初のアイテムは先頭に寄せ、最後のアイテムは末尾に寄せる  -->
-    <div iv class="md:flex justify-between mt-4">
+    <div class="md:flex justify-between mt-4">
       <!-- ブログ記事見出しエリア -->
       <!-- flex autoにすることでフレックスコンテナーの空き領域を埋めるために伸長するためにつけた
             max-sm:hiddenはsmall以下になると小さい画面サイズで要素を非表示にできるようにしている-->
@@ -39,18 +12,19 @@
         <p class="midashi-text">BLOG</p>
         <!-- ↓反復処理を行っている。,idxは反復する数字のデータをとってきている。:keyはVue.において各要素を一意に識別するための特別な属性。一般的には、インデックス（idx）を使用することがあるが、それだけではない。
             識別子（Identifier） -->
-        <ArticleHeading 
-           v-for="(blog, idx) of blogs" 
-          :key="idx" 
-          :imgSrc="blog.eyecatch.url" 
+        <ArticleHeading
+          v-for="(blog, idx) of blogs"
+          :key="idx"
+          :imgSrc="blog.eyecatch.url"
           :caption="blog.title"
-          :postedDate="blog.formatedDate" 
-          :category="blog.category" 
+          :postedDate="blog.formatedDate"
+          :category="blog.category"
           :blogId="blog.id"
-          :content="blog.content">
+          :content="blog.content"
+        >
         </ArticleHeading>
       </div>
-      
+
       <!-- <FooterNavigation :navs="[{label:'1', path: '/'},
                                 {label:'2', path: '/'},
                                 {label:'3', path: '/'},
@@ -59,66 +33,36 @@
 
       <!-- スマホ用記事エリアのラッパークラス（スマホサイズで表示、それ以上で非表示） -->
       <div class="sm:hidden flex-auto px-8 mb-8">
-        <BlogHeadingmobile 
-          v-for="(blog, idx) of blogs" 
-          :key="idx" 
-          :imgSrc="blog.eyecatch.url" 
+        <BlogHeadingmobile
+          v-for="(blog, idx) of blogs"
+          :key="idx"
+          :imgSrc="blog.eyecatch.url"
           :caption="blog.title"
-          :postedDate="blog.formatedDate" 
-          :category="blog.category">
+          :postedDate="blog.formatedDate"
+          :category="blog.category"
+        >
         </BlogHeadingmobile>
       </div>
-      <div class="sm:hidden bg-primary rounded-3xl w-48 h-10 text-center leading-10 font-bold text-xl text-white  hover:bg-primary-200 hover:text-bg-200 cursor-pointer duration-200 m-auto mb-2">投稿一覧へ</div>
-      
-      <!-- サブメニューエリア -->
-      <div class="w-80 mx-8 max-sm:mx-auto">
-        <!-- 自己紹介 --> <!-- スマホ表示の時は非表示にする -->
-        <!-- <div class=" max-sm:hidden"> -->
-          <div class=" max-sm:hidden">
-            <p class="text-center midashi-text mt-6">ari</p>
-            <p>
-              全くプログラム知識のない人間が気まぐれで始めたブログ。何気ない日常を綴っていきます！
-            </p>
-          </div>
-          <div class="sm:hidden">
-            <div class="midashi-text">ABOUT</div>
-            <div class=" font-bold">aripageについて</div>
-            <p>
-              全くプログラム知識のない人間が気まぐれで始めたブログ。何気ない日常を綴っていきます！
-            </p>
-            <div class=" mt-3 bg-primary rounded-3xl w-48 h-10 text-center leading-10 font-bold text-xl text-white  hover:bg-primary-200 hover:text-bg-200 cursor-pointer duration-200 m-auto">詳しくはこちら</div>
-        </div>
-          <!-- </div> -->
-        <!-- pick up表示エリア
-            <p class="text-center midashi-text">PICK UP</p>
-            <Pickup :blogs="pickup"></Pickup> -->
-
-        <!-- カテゴリー表示エリア -->
-        <div class="mt-6 border-2 border-accent-200">
-          <p class="text-center midashi-text">CATEGORY</p>
-          <CategoryList class="mx-4 mb-2" :categories="categories"></CategoryList>
-          <!-- :categories="['i', 'love', 'you?']" -->
-        </div>
-        <!-- TAGエリア
-        <p class="max-sm:text-left text-center midashi-text mt-6">TAG</p>
-        <TagList class="pl-4" :tags="tags"></TagList> -->
+      <div
+        class="sm:hidden bg-primary rounded-3xl w-48 h-10 text-center leading-10 font-bold text-xl text-white hover:bg-primary-200 hover:text-bg-200 cursor-pointer duration-200 m-auto mb-2"
+      >
+        投稿一覧へ
       </div>
+
+      <!-- サブメニューエリア -->
+      <SideMenu class="max-sm:mx-auto" />
     </div>
   </div>
 </template>
-        
-
 
 <script>
-import HeaderNavigation from "../components/HeaderNavigation.vue";
-import ArticleHeading from "../components/ArticleHeading.vue";
-import CategoryList from "../components/CategoryList.vue";
-import TagList from "../components/TagList.vue";
-
 import { parseISO, format } from "date-fns";
 import { createClient } from "microcms-js-sdk";
-import Pickup from "../components/Pickup.vue";
+
+import Header from "../components/shared/header/Header.vue";
+import ArticleHeading from "../components/ArticleHeading.vue";
 import BlogHeadingmobile from "../components/BlogHeadingmobile.vue";
+import SideMenu from "../components/shared/sideMenu/SideMenu.vue";
 import FooterNavigation from "../components/FooterNavigation.vue";
 
 // TODO envファイルから読めないから直書き　え〜やだ〜キモーーイ
@@ -129,7 +73,13 @@ const client = createClient({
 
 export default {
   name: "Home",
-  components: { ArticleHeading, CategoryList, TagList, Pickup, FooterNavigation },
+  components: {
+    Header,
+    ArticleHeading,
+    BlogHeadingmobile,
+    SideMenu,
+    FooterNavigation,
+  },
   data() {
     return {
       blogs: [],
@@ -173,8 +123,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.midashi-text {
-  font-size: 30px;
-}
-</style>
+<style scoped></style>
